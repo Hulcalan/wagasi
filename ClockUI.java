@@ -59,7 +59,7 @@ public class ClockUI extends TimeClient{
       
       public ClockPane(Integer value) {
          try {
-            circle = ImageIO.read(new File("./images/picture1.png"));
+            circle = ImageIO.read(new File("./images/night.png"));
             indicator = ImageIO.read(new File("./images/LT.png"));
             images = ImageIO.read(new File("./images/x.png"));
             imagec = ImageIO.read(new File("./images/settings.png"));
@@ -81,7 +81,7 @@ public class ClockUI extends TimeClient{
                //
                //
                //
-         set.setBounds(570,260,55,55);
+         set.setBounds(620,665,55,55);
          set.setOpaque(false);
          set.setContentAreaFilled(false);
          set.setBorderPainted(false);
@@ -106,7 +106,7 @@ public class ClockUI extends TimeClient{
                      JOptionPane.showMessageDialog(null, "Option 1 selected");
                   }
                }));
-         close.setBounds(570,600,55,55);
+         close.setBounds(665,630,55,55);
          close.setOpaque(false);
          close.setContentAreaFilled(false);
          close.setBorderPainted(false);
@@ -124,7 +124,7 @@ public class ClockUI extends TimeClient{
                new ActionListener() {
                   @Override
                            public void actionPerformed(ActionEvent e) {
-                     angle += .25;
+                     angle -= .5;
                      if (angle > 360) {
                         angle -= 360;
                      }
@@ -168,27 +168,33 @@ public class ClockUI extends TimeClient{
    
       @Override
       protected void paintComponent(Graphics g) {
-      
+         Image icon = new ImageIcon(getClass().getResource("./images/day.gif")).getImage();
+         Image ten = new ImageIcon(getClass().getResource("./images/ten.png")).getImage();
+         Image leven = new ImageIcon(getClass().getResource("./images/leven.png")).getImage();
+         Image doc = new ImageIcon(getClass().getResource("./images/doc.png")).getImage();
          super.paintComponent(g);
       
          Graphics2D g2d = (Graphics2D) g.create();
       
          int x = (getWidth() - circle.getWidth()) / 2;
          int y = (getHeight() - circle.getHeight()) / 2;
-      
+         g2d.drawImage(ten, x -65 ,y -100 , this);
+         g2d.drawImage(leven, x +300 ,y -140 , this);
+         g2d.drawImage(icon, x + 100,y +90, this);
+         
          g2d.drawImage(circle, x, y, this);
-      
+      g2d.drawImage(doc, x + 80  ,y -120 , this);
          x = getWidth() / 2;
          y = getHeight() / 2;
       
          Point p = getCircleStart();
-         g2d.setColor(Color.BLUE);
+         g2d.setColor(Color.WHITE);
          g2d.drawLine(x, y, p.x, p.y);
       
          AffineTransform at = AffineTransform.getTranslateInstance(p.x, p.y);
          at.rotate(Math.toRadians(-angle));
          g2d.setTransform(at);
-         g2d.drawImage(indicator, 50, -25, this);
+         g2d.drawImage(indicator, 50,-25, this);
          
       
          g2d.dispose();

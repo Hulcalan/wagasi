@@ -18,8 +18,12 @@ public class TimeClient
       Integer ms = new Integer(0);   
       timeNode<String, String, Integer> bam = new timeNode<String, String, Integer>(time,date,ms);
       new input(bam);
-      check = (bam.getTime()/240000) +270;
+      check = (bam.getTime()/120000) + 30;
+     // if( check > 360){
+     // check = check -360;
+      //}
       System.out.println(check);
+      System.out.println(bam.getTime());
       new ClockUI(check);
         
       
