@@ -26,6 +26,7 @@ import java.util.concurrent.*;
 public class Driver{
    public static void main(String[] args) throws Exception {
    
+      new UI2(0);
       new ClockUI(0);
    }
 }

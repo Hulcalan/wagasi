@@ -86,7 +86,7 @@ public class ClockUI extends TimeClient{
       }
       else{
          time = 450 - (time/120000) ;
-         System.out.println("Finished!");
+       
       }
       return time;
    }
@@ -97,6 +97,7 @@ public class ClockUI extends TimeClient{
       timeNode<String, String, Integer> bam = null;
                   
       ExecutorService executor = Executors.newSingleThreadExecutor();
+      
       Future<timeNode> future = executor.submit(new input());
                   
       try {//trys to see if it will allow for internet data
@@ -134,7 +135,9 @@ public class ClockUI extends TimeClient{
          
       return time;
             
-   } 
+   }
+   
+   
    class ClockPane extends JLayeredPane {
    
       private BufferedImage circle;
@@ -220,10 +223,10 @@ public class ClockUI extends TimeClient{
                   public void actionPerformed(ActionEvent e) {
                      timer.stop();
                      temp = angle;
-                     angle = 0;
+                     angle = 90;
                      time = 1000;
                      diff = 6;
-                     
+                     counter = 0;
                      timer = new Timer(time, 
                            new ActionListener() {
                               @Override
@@ -234,15 +237,16 @@ public class ClockUI extends TimeClient{
                                  }
                                  repaint();
                                  counter = counter + time;
-                                // System.out.println(counter);
-                                 if( counter == 61000){
+                               
+                                 if( counter >= 61000){
                                     timer.stop();
-                                 // System.out.println(temp);
+                                
                                     angle = temp + (counter/120000);
                                     temp = 0;
                                     time = 60000;
                                     diff = .5;
-                                    JOptionPane.showMessageDialog(null, "Alarm sounds AAAWOOOOGAAAAA #lazyProgramer!");
+                                    Toolkit.getDefaultToolkit().beep();
+                                    JOptionPane.showMessageDialog(null, "TIMER COMPLETE!");
                                  
                                     timer = new Timer(time, 
                                           new ActionListener() {
@@ -254,7 +258,7 @@ public class ClockUI extends TimeClient{
                                                 }
                                                 repaint();
                                                 counter = counter + time;
-                                                System.out.println(counter);
+                                               
                                              }
                                           });
                                     timer.setRepeats(true);
@@ -281,7 +285,7 @@ public class ClockUI extends TimeClient{
                   public void actionPerformed(ActionEvent e) {
                      if(temp != 0){
                         timer.stop();
-                                // System.out.println(temp);
+                            
                         angle = temp + (counter/120000);
                         time = 60000;
                         diff = .5;
@@ -296,7 +300,7 @@ public class ClockUI extends TimeClient{
                                     }
                                     repaint();
                                     counter = counter + time;
-                                    System.out.println(counter);
+                                    
                                  }
                               });
                         timer.setRepeats(true);
@@ -321,7 +325,7 @@ public class ClockUI extends TimeClient{
                new AbstractAction("Sync With NTP server") {
                   public void actionPerformed(ActionEvent e) {
                      timer.stop();
-                                // System.out.println(temp);
+                           
                      angle = checkTime(sync(0));
                      time = 60000;
                      diff = .5;
@@ -336,7 +340,7 @@ public class ClockUI extends TimeClient{
                                  }
                                  repaint();
                                  counter = counter + time;
-                                 System.out.println(counter);
+                               
                               }
                            });
                      timer.setRepeats(true);
@@ -388,7 +392,7 @@ public class ClockUI extends TimeClient{
          // If you add indicator.getWidth, you might be able to change the above...
          int fullLength = Math.round((radius / 2)) ;
       
-         // Calculate the outer point of the line
+         // Calculate the outter point of the line
          int xPosy = Math.round((float) (x + Math.cos(rads) * fullLength-10));
          int yPosy = Math.round((float) (y - Math.sin(rads) * fullLength));
       
